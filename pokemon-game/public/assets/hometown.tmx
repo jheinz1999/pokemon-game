@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="32" height="32" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="hometown" tilewidth="16" tileheight="16">
+  <image source="img/tileset.png" width="1408" height="1104"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJzt1bkVwjAQRdHvJQFXgCFhacoQ2VTA0hhQBUtRPJdgMSCsM8GNXzD/SLmk3LmRa7DFLlL/gitukfqTTJqiyuL0W7od9h/0U7nhrJBqzLEofn/DA80jTjgP6FvcsHen+cATrwF9K8tSWmGNTRlnS859SyrvZKgU/rp/3YnltkJ2YrmtkJ1YbitkJ2PZlkvDG7oxI6s=
+  </data>
+ </layer>
+</map>
