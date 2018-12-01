@@ -30,7 +30,7 @@ class Scene1 extends Phaser.Scene {
     let collisionTiles = map.createStaticLayer('collision', tileset)
     collisionTiles.setCollisionByExclusion([-1]);
 
-    this.player = this.physics.add.sprite(400, 400, 'player', 4);
+    this.player = this.physics.add.sprite(128, 128, 'player', 4);
     this.physics.world.bounds.width = map.widthInPixels;
     this.physics.world.bounds.height = map.heightInPixels;
 
@@ -70,39 +70,75 @@ class Scene1 extends Phaser.Scene {
         repeat: -1
     });
 
-    console.log(this.scale);
+    this.player.direction = 'down';
+    this.player.canMove = true;
+    this.player.setOrigin(0, 0);
+    this.player.targetX = this.player.x;
+    this.player.targetY = this.player.y;
+
+    this.player.handleMovement = () => {
+
+      this.player.x = Math.round(this.player.x);
+      this.player.y = Math.round(this.player.y);
+
+          if (this.cursors.left.isDown && this.player.canMove)
+          {
+              this.player.body.setVelocityX(-32);
+              this.player.anims.play('left', true);
+              this.player.direction = 'left';
+              this.player.canMove = false;
+              this.player.targetX -= 16;
+          }
+          else if (this.cursors.right.isDown && this.player.canMove)
+          {
+              this.player.body.setVelocityX(32);
+              this.player.anims.play('right', true);
+              this.player.direction = 'right';
+              this.player.canMove = false;
+              this.player.targetX += 16;
+          }
+          else if (this.cursors.up.isDown && this.player.canMove)
+          {
+              this.player.body.setVelocityY(-32);
+              this.player.anims.play('up', true);
+              this.player.direction = 'up';
+              this.player.canMove = false;
+              this.player.targetY -= 16;
+          }
+          else if (this.cursors.down.isDown && this.player.canMove)
+          {
+              this.player.body.setVelocityY(32);
+              this.player.anims.play('down', true);
+              this.player.direction = 'down';
+              this.player.canMove = false;
+              this.player.targetY += 16;
+          }
+          else if (this.player.canMove) {
+
+            this.player.body.setVelocity(0);
+            this.player.anims.play(this.player.direction, 0);
+            this.player.anims.stop();
+
+          }
+
+          if (!this.player.canMove) {
+
+            console.log(this.player.direction, this.player.x, this.player.y, this.player.targetX, this.player.targetY);
+
+            if (this.player.targetX === this.player.x && this.player.targetY === this.player.y) {
+              this.player.canMove = true;
+              this.player.setVelocity(0);
+            }
+
+          }
+
+    }
 
   }
 
   update = () => {
 
-    this.player.body.setVelocity(0);
-
-        if (this.cursors.left.isDown)
-        {
-            this.player.body.setVelocityX(-80);
-            this.player.anims.play('left', true);
-        }
-        else if (this.cursors.right.isDown)
-        {
-            this.player.body.setVelocityX(80);
-            this.player.anims.play('right', true);
-        }
-        else if (this.cursors.up.isDown)
-        {
-            this.player.body.setVelocityY(-100);
-            this.player.anims.play('up', true);
-        }
-        else if (this.cursors.down.isDown)
-        {
-            this.player.body.setVelocityY(80);
-            this.player.anims.play('down', true);
-        }
-        else {
-
-          this.player.anims.stop();
-
-        }
+    this.player.handleMovement();
 
   }
 
